@@ -1,0 +1,1 @@
+New-DynamicDistributionGroup -Name "GroupName" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Database -eq 'CN=DatabaseName,CN=Databases,CN=Exchange Administrative Group (XXXX),CN=Administrative Groups,CN=CONTOSO,CN=Microsoft Exchange,CN=Services,CN=Configuration,DC=contoso,DC=com')}
