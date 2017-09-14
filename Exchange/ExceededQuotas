@@ -1,0 +1,19 @@
+$CSS='<style>table{margin:left; width:60%}
+              body {font-family: Tahoma; background-color:#fff;}
+              table {font-family: Tahoma;width: $($rptWidth)px;font-size: 12px;border-collapse:collapse;}
+              <!-- table tr:nth-child(odd) td {background: #e2e2e2;} -->
+              th {background-color: #cccc99;border: 1px solid #a7a9ac;border-bottom: none;}
+              td {background-color: #ffffff;border: 1px solid #a7a9ac;padding: 2px 3px 2px 3px;vertical-align: middle;text-align;}
+     </style>'
+
+$DateTime     = (Get-Date).ToString('yyyyMMdd-HHmm')
+
+Get-Mailbox -ResultSize Unlimited | Get-MailboxStatistics | where {$_.StorageLimitStatus -notlike "BelowLimit*"-and $_.StorageLimitStatus -notlike "NoChecking"} |
+Select DisplayName,LastLoggedOnUserAccount,StorageLimitStatus,ItemCount,DeletedItemCount,TotalItemSize,TotalDeletedItemSize,Database,LastLogonTime |
+Sort StorageLimitStatus,DisplayName |
+Export-CSV "C:\Scripts\ExchangeExceededQuotas$DateTime.csv" -NoTypeInformation
+
+
+$ServiceHTML  = Import-Csv C:\Scripts\ExchangeExceededQuotas$DateTime.csv | 
+                ConvertTo-Html -Body "$CSS" | 
+                Out-File C:\Scripts\ExchangeExceededQuotas$DateTime.html -Append
