@@ -51,7 +51,7 @@ $BackupFolderVM = $BackupFolder + "\VBRZip" + " " + "$VM"
 $BackupLogFile  = $BackupFolder + "\VBRZip" + " " + "$VM" + "\" + "VBRZip" + " " + "$VM" + ".txt"
 
 if (!$(Test-Path $BackupFolderVM)) {
-mkdir $BackupFolderVM
+    mkdir $BackupFolderVM
 }
 
 Start-VBRZip -Folder "$BackupFolderVM" -Entity $VMName -Compression 5 -AutoDelete $DeleteAfter
