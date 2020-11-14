@@ -60,7 +60,7 @@ $Results =  Get-VBRBackupSession | Where-Object {$_.Name -match $VM} | Sort-Obje
 $ResultsLog = $Results.Result 
 $Date + " " + "Backup" + "$VM" + " " + "$ResultsLog" | Out-File -FilePath $BackupLogFile -Append
 
-    if ($Results.Result -eq "Failed") {
+if ($Results.Result -eq "Failed") {
     $Text        = "$Date Backup Server $VM FAILED"
     $TelegramURL = "https://api.telegram.org/bot" + $BotToken + "/sendMessage?chat_id=" + $Group_id + "&text=" + $Text
     $Request     = Invoke-WebRequest -URI ($TelegramURL) 
